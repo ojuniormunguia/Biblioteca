@@ -27,7 +27,21 @@ body {
   margin: 0 -5px;
 }
 
+@media screen and (max-width: 1200px) {
+  .column {
+    width:33%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
 
+@media screen and (max-width: 1000px) {
+  .column {
+    width:50%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
 
 @media screen and (max-width: 600px) {
   .column {
@@ -36,6 +50,7 @@ body {
     margin-bottom: 20px;
   }
 }
+
 
 .card {
   box-shadow: 0 4px 8px 0 rgb(104 104 132 / 49%);
@@ -47,9 +62,8 @@ body {
   height:23rem;
 }
 
-.container {
-  width: 500px;
-  height: 250px;
-  margin: 50px;
-  outline: solid 1px black;
+.cardalign {
+  width: 76%;
+  margin: auto;
+  background-color: #FFF4A3;
 }

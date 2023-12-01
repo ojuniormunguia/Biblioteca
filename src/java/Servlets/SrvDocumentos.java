@@ -22,6 +22,13 @@ public class SrvDocumentos extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        int mostrarID = 0;
+        String mostrarTipoDeDocumento = "";
+        String mostrarNombre = "";
+        String mostrarUbicacion = "";
+        int mostrarEjemplares = 0;
+        int mostrarPrestados = 0;
+        int mostrarDisponibles = 0;
 
         try {
             // Get user input from the form
@@ -58,19 +65,24 @@ public class SrvDocumentos extends HttpServlet {
                         out.println("<head>");
                         out.println("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">");
                         out.println("<link href=\"css/styles.css\" rel=\"stylesheet\" type=\"text/css\"/>");
+                        out.println("<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n" +
+                            "<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n" +
+                            "<link href=\"https://fonts.googleapis.com/css2?family=PT+Serif&display=swap\" rel=\"stylesheet\">");
                         out.println("<title>Search Results</title>");                        
                         out.println("</head>");
                         out.println("<body>");
                         out.println("<h2 style=\"text-align:center\">Lista de documentos</h2>");
-                        out.println("</div class=\"container\">");
+                        out.println("<div class=\"cardalign\">");
 
                         // Iterate through the result set and display the data
-                        int cardCounter = 4;
+
                         while (resultSet.next()) {
                             out.println("<div class=\"row\">");
                             out.println("<div class=\"column\">");
                             out.println("<div class=\"card\">");
-                            out.println("<h3>Card " + cardCounter + "</h3>");
+                            
+                         
+                            out.println("<h3>" + resultSet.getString("nombre_documento") + "</h3>");
                             out.println("<p>ID: " + resultSet.getInt("id") + "</p>");
                             out.println("<p>Tipo Documento: " + resultSet.getString("tipo_documento") + "</p>");
                             out.println("<p>Nombre Documento: " + resultSet.getString("nombre_documento") + "</p>");
@@ -81,7 +93,6 @@ public class SrvDocumentos extends HttpServlet {
                             out.println("</div>");
                             out.println("</div>");
                             out.println("</div>");
-                            cardCounter++;
                         }
                         out.println("</div>");
                         out.println("</body>");

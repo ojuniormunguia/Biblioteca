@@ -1,0 +1,170 @@
+  /* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1eff8;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #cababa; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #7e7373; 
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.menu-1,
+.menu-2,
+.menu-3 {
+  position: absolute;
+  width: 14.51%;
+  top: 0;
+  right: 85.49%;
+  left: 0;
+  background-color: #a08dd7;
+  height: 4.25rem;
+  overflow: hidden;
+}
+.menu-2,
+.menu-3 {
+  width: 68.27%;
+  right: 17.22%;
+  left: 14.51%;
+  background-color: #4116c7;
+}
+.menu-3 {
+  width: 17.22%;
+  right: -17.22%;
+  left: 100%;
+  background-color: #28470a;
+  transform: rotate(180deg);
+  transform-origin: 0 0;
+}
+.menu-superior {
+  align-self: stretch;
+  position: relative;
+  height: 4.31rem;
+}
+.frame,
+.image,
+.menu-superior {
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.image {
+  position: relative;
+  height: 130vw; 
+  filter:blur(9px);
+}
+.frame {
+  background-color: #000000;
+  width: 100%; /* Set the width to 100% of the viewport width */
+  max-width: 100%; /* Ensure the width does not exceed 100% */
+  height: 50%;
+}
+.bg {
+  position: relative;
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 80vw; /* Set the width to 80% of the viewport width */
+  height: 100vw;
+  margin-top: -10.69rem;
+  padding: 50px;
+  
+}
+
+.column {
+  float: left;
+  margin-right: 25px;
+}
+.column.left {
+  width: 30%;
+}
+.column.right {
+  width: 50%;
+}
+
+.in {
+  float: left;
+  margin-right: 42px;
+}
+.in.left {
+  width: 25%;
+  background: black;
+  margin-top:49px;
+  height: 50vw;
+}
+.in.right {
+  width: 60%;
+}
+
+.coverart {
+  width: 100%;
+  height: 100%; /* Set the height to match the height of .in.left */
+  object-fit: cover;
+}
+
+.bsqueda-avanzada,
+.content {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.content {
+  width: 100%;
+  height: 90%;
+  flex-shrink: 0;
+  margin-top: -0.06rem;
+}
+.bsqueda-avanzada {
+  position: relative;
+  background-color: var(--color-white);
+  width: 100%;
+  height: 56.44rem;
+}
+@media screen and (max-width: 827px){
+  .bg{
+    height:100vw;
+  }
+  .in.left{
+    height:20vw;
+    width:20vw;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .bg {
+    width: 100%; /* Change the width to 100% on screens smaller than 600 pixels */
+    padding: 40px;
+    box-shadow:none;
+  }
+  .column.left{
+    width:100%;
+  }
+  .column.right{
+    width:100%
+  }
+  .in.left{
+    height:20vw;
+    width:80vw;
+  }
+
+}

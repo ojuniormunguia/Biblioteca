@@ -4,10 +4,52 @@
         <servlet-name>SrvDocumentos</servlet-name>
         <servlet-class>Servlets.SrvDocumentos</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DisplayDataServlet</servlet-name>
+        <servlet-class>Servlets.DisplayDataServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SrvInfoLibro</servlet-name>
+        <servlet-class>Servlets.SrvInfoLibro</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SrvBusqueda</servlet-name>
+        <servlet-class>Servlets.SrvBusqueda</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SrvAdd</servlet-name>
+        <servlet-class>Servlets.SrvAdd</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SrvContinuar</servlet-name>
+        <servlet-class>Servlets.SrvContinuar</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SrvDocumentos</servlet-name>
+        <url-pattern>/SrvDocumentos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DisplayDataServlet</servlet-name>
+        <url-pattern>/DisplayDataServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SrvInfoLibro</servlet-name>
+        <url-pattern>/SrvInfoLibro</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SrvBusqueda</servlet-name>
+        <url-pattern>/SrvBusqueda</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SrvAdd</servlet-name>
+        <url-pattern>/SrvAdd</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SrvContinuar</servlet-name>
+        <url-pattern>/SrvContinuar</url-pattern>
+    </servlet-mapping>
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>30</session-timeout>
     </session-config>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>

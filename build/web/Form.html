@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link href="css/StyleForm.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body>
+  <div class="bsqueda-avanzada">
+    <div class="menu-superior">
+      <div class="menu-1"></div>
+      <div class="menu-2"></div>
+      <div class="menu-3"></div>
+    </div>
+    <div class="content">
+      <div class="frame">
+        <div class="image">
+        </div>
+      </div>
+      <div class="bg">
+        <form action="SrvAdd" method="post">
+          <h1>Editando libro</h1> 
+          
+          <label for="nombre_documento">Nombre de Documentos:</label>
+          <input type="text" id="nombre_documento" name="nombre_documento" required>
+            
+          <label for="tipo_documentos">Tipo de Documentos:</label>
+          <input type="text" id="tipo_documentos" name="tipo_documento" required>
+          
+          <label for="resumen">Resumen:</label>
+          <textarea id="resumen" name="resumen" required></textarea>
+          
+          <label for="autor">Autor:</label>
+          <input type="text" id="autor" name="autor" required>
+
+          <label for="genero">Género:</label>
+          <input type="text" id="genero" name="genero" required>
+
+          <label for="ubicacion_fisica">Ubicación Física:</label>
+          <input type="text" id="ubicacion_fisica" name="ubicacion_fisica" required>
+
+          <label for="cantidades_ejemplares">Cantidad de Ejemplares:</label>
+          <input type="number" id="cantidades_ejemplares" name="cantidad_ejemplares" required>
+
+          <label for="ejemplares_prestados">Ejemplares Prestados:</label>
+          <input type="number" id="ejemplares_prestados" name="ejemplares_prestados" required>
+
+          <label for="ISBN">ISBN:</label>
+          <input type="text" id="ISBN" name="ISBN" required>
+
+          <label for="releasedate">Fecha de Publicación:</label>
+          <input type="text" id="releasedate" name="releasedate" required>
+
+          <label for="image_url">URL de la Imagen:</label>
+          <input type="text" id="image_url" name="image_url" required>
+
+          <input type="submit" value="Submit">
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

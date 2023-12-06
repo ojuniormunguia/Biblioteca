@@ -4,8 +4,11 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/theoj/OneDrive/Documentos/Biblioteca/src/java/Servlets/SrvDocumentos.java</file>
-            <file>file:/C:/Users/theoj/OneDrive/Documentos/Biblioteca/src/java/AccesoDatos/DatabaseConnection.java</file>
-            <file>file:/C:/Users/theoj/OneDrive/Documentos/Biblioteca/web/css/styles.css</file>
+            <file>file:/C:/Users/theoj/OneDrive/Documentos/Biblioteca/web/Form.html</file>
+            <file>file:/C:/Users/theoj/OneDrive/Documentos/Biblioteca/src/java/Servlets/SrvBusqueda.java</file>
+            <file>file:/C:/Users/theoj/OneDrive/Documentos/Biblioteca/src/java/Servlets/SrvAdd.java</file>
+            <file>file:/C:/Users/theoj/OneDrive/Documentos/Biblioteca/src/java/Servlets/SrvInfoLibro.java</file>
+            <file>file:/C:/Users/theoj/OneDrive/Documentos/Biblioteca/web/WEB-INF/web.xml</file>
             <file>file:/C:/Users/theoj/OneDrive/Documentos/Biblioteca/web/index.jsp</file>
         </group>
     </open-files>

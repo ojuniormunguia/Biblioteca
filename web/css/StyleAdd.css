@@ -276,32 +276,6 @@ label {
     box-shadow: 0 4px 30px 0 rgb(255 178 27 / 53%);
 }
 
-.filtros {
-  margin-left: 10px;
-  height:39px;
-  position: relative;
-  display: inline-block;
-  background: #797a74;
-  color: white;
-  padding-right:2px;
-  padding-left:15px;
-  border-radius: 25px;
-  border-right-width: 20px;
-}
-
-.botones {
-  display: flex;
-  justify-content: space-between;
-}
-
-.botones .left {
-   flex: 1;
-}
-
-.botones .right {
-  margin-left: 25px; /* Adjust the margin as needed */
-}
-
 @media screen and (max-width: 1200px) {
   .column {
     width: 33%;
@@ -324,6 +298,6 @@ label {
    .Buscar {
     width: 100%;
   }
-
+  
 }
 

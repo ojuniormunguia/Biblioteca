@@ -3,43 +3,316 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to c
 Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
 */
 /* 
-    Created on : 30 nov 2023, 00:19:24
-    Author     : theoj
+    Created on: 30 Nov 2023, 00:19:24
+    Author: theoj
 */
+
 * {
   box-sizing: border-box;
 }
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  
 }
 
 .column {
   font-size: smaller;
   float: left;
-  width: 23%;
-  padding: 0 10px;
-  height:24.5rem;
+  width: 25%;
+  padding: 0 15px;
+  height: 24.5rem;
+  
 }
 
 .row {
   margin: 0 -5px;
+  
+}
+
+
+.card {
+  box-shadow: 0 4px 70px 0 rgb(235 207 207 / 56%);
+  padding: 20px;
+  text-align: left;
+  background-color: white;
+  color: #313245;
+  border-radius: 9px;
+  height: 23rem;
+  transition: box-shadow 500ms, padding 300ms;
+  transition-timing-function: ease-in-out;
+}
+.card:hover {
+  padding:18px;
+  box-shadow: 0 4px 30px 0 rgb(197 134 162 / 85%);
+}
+.cardalign {
+  width: 76%;
+  margin: auto;
+  background-color: white;
+  box-shadow: 0 4px 30px 0 rgb(246 184 184 / 16%);
+  
+}
+
+.filterList{
+    background-color: black;
+    width:10px;
+}
+
+.menu-1 {
+    position: absolute;
+    width: 14.51%;
+    top: 0;
+    right: 85.49%;
+    left: 0;
+    background-color: #d5c3ed;
+    height: 4.25rem;
+    overflow: hidden;
+  }
+  .menu-2 {
+    position: absolute;
+    width: 68.27%;
+    top: 0;
+    right: 17.22%;
+    left: 14.51%;
+    background-color: #a08dd7;
+  }
+  .frame-inner,
+  .menu-2,
+  .menu-superior {
+    height: 4.25rem;
+    overflow: hidden;
+    
+  }
+  .frame-inner {
+    position: absolute;
+    width: 17.22%;
+    top: 0;
+    right: -17.22%;
+    left: 100%;
+    background-color: #6167fd;
+    transform: rotate(180deg);
+    transform-origin: 0 0;
+    
+  }
+  .menu-superior {
+    align-self: stretch;
+    position: relative;
+    flex-shrink: 0;
+    
+  }
+  .para-resultados {
+    box-shadow: 0 4px 30px 0 rgb(246 184 184 / 53%);
+    background-color: white;
+    color: white;
+    overflow-y: auto;
+    max-height: 500px; 
+    padding-top: 35px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 30px;
+    
+    
+}
+  .degradado {
+    position: absolute;
+    width: 100%;
+    top: 0.06rem;
+    right: 0;
+    left: 0;
+    background: linear-gradient(180deg, #fef7b3, #ffd3d0);
+    height: 28.75rem;
+  }
+  .para-filtros,
+  .frame-div {
+    position: absolute;
+    height: 100%;
+    width: 74.72%;
+    top: 0;
+    right: 25.28%;
+    bottom: 0;
+    left: 0;
+    background-color: #ffdada;
+    overflow: hidden;
+    
+  }
+  .para-filtros {
+    width: 25.28%;
+    right: 0;
+    left: 74.72%;
+    background-color: #d8bebe;
+  }
+  .contenido {
+    height: calc(100% - 329px);
+    width: 87.86%;
+    top: 20.56rem;
+    right: 6.07%;
+    bottom: 0;
+    left: 6.07%;
+    background-color: var(--color-white);
+    box-shadow: 0 4px 25px 0 rgb(194 165 165 / 53%);
+  }
+  .principal,
+  .contenido,
+  .fondo {
+    position: absolute;
+    overflow: hidden;
+  }
+  .principal {
+    width: 87.86%;
+    top: 0;
+    right: 6.07%;
+    left: 6.07%;
+    height: 18rem;
+  }
+  .fondo {
+    height: calc(100% - 3px);
+    width: 100%;
+    top: 0.19rem;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+  .pantalla,
+  .contenido-pagina {
+    position: relative;
+    overflow: hidden;
+  }
+  .contenido-pagina {
+    align-self: stretch;
+    height: 52.19rem;
+    flex-shrink: 0;
+  }
+  .pantalla {
+    background-color: var(--color-white);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  
+  /* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1eff8;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #cababa; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #7e7373; 
+}
+
+.Buscar {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    margin-top: 20px; 
+    width: 75%;
+    background: white;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 25px;
+    margin: auto;
+    margin-top: 100px;
+    padding-right: 25px; 
+    box-shadow: 0 4px 30px 0 rgb(246 184 184 / 53%);
+    border-radius:6px;
+}
+
+
+
+label {
+    margin-right: 10px;
+}
+
+.Buscar-texto {
+    padding: 10px; /* Increase padding */
+    font-size: 14px;
+    margin-right: 5px; /* Add margin to the right */
+    border: none; /* Remove the border */
+    width: inherit;
+}
+.Buscar-texto:focus{
+    outline: none;
+}
+
+.Buscar-boton {
+    padding: 12px 17px; /* Increase padding */
+    font-size: 14px;
+    background-color: #edbb0a;
+    color: white;
+    border: solid;
+    border-color: transparent;
+    cursor: pointer;
+    padding-bottom: 26px;
+    border-radius: 25px;
+    height: 35px;
+    align-content: center; 
+    font-weight:700;
+    transition: box-shadow 500ms, background-color 200ms, border-color 200ms;
+    transition-timing-function: ease-in-out;
+}
+.BusquedaAv{
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.Buscar-boton:hover {
+    background-color: #ffffff;
+    border: solid;
+    color: #edbb0a;
+    transition: box-shadow 500ms, background-color 400ms, border-color 500ms;
+    transition-timing-function: ease-in-out;
+    box-shadow: 0 4px 30px 0 rgb(255 178 27 / 53%);
+}
+
+.filtros {
+  margin-left: 10px;
+  height:39px;
+  position: relative;
+  display: inline-block;
+  background: #797a74;
+  color: white;
+  padding-right:2px;
+  padding-left:15px;
+  border-radius: 25px;
+  border-right-width: 20px;
+}
+
+.botones {
+  display: flex;
+  justify-content: space-between;
+}
+
+.botones .left {
+   flex: 1;
+}
+
+.botones .right {
+  margin-left: 25px; /* Adjust the margin as needed */
 }
 
 @media screen and (max-width: 1200px) {
   .column {
-    width:33%;
+    width: 33%;
     display: block;
-    margin-bottom: 20px;
   }
 }
 
 @media screen and (max-width: 1000px) {
   .column {
-    width:50%;
+    width: 50%;
     display: block;
-    margin-bottom: 20px;
   }
 }
 
@@ -47,23 +320,10 @@ body {
   .column {
     width: 100%;
     display: block;
-    margin-bottom: 20px;
   }
+   .Buscar {
+    width: 100%;
+  }
+
 }
 
-
-.card {
-  box-shadow: 0 4px 8px 0 rgb(104 104 132 / 49%);
-  padding: 20px;
-  text-align: left;
-  background-color: #ffffff;
-  color:#313245;
-  border-radius:9px;
-  height:23rem;
-}
-
-.cardalign {
-  width: 76%;
-  margin: auto;
-  background-color: #FFF4A3;
-}

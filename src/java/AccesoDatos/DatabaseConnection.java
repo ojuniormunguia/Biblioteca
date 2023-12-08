@@ -10,7 +10,7 @@ public class DatabaseConnection {
     private static DatabaseConnection instance;
 
     // Database connection properties
-    private final String url = "jdbc:mysql://158.69.48.30:55201/colegio_amigos_de_don_bosco";
+    private final String url = "jdbc:mysql://158.69.48.30:55201/colegio_amigos_de_don_bosco?useUnicode=true&characterEncoding=UTF-8";
     private final String username = "poo23";
     private final String password = "87MmfPc14q7ZChaqrK8X";
 
@@ -35,7 +35,7 @@ public class DatabaseConnection {
     public static Connection getConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String url = "jdbc:mysql://158.69.48.30:55201/colegio_amigos_de_don_bosco";
+            String url = "jdbc:mysql://158.69.48.30:55201/colegio_amigos_de_don_bosco?useUnicode=true&characterEncoding=UTF-8";
             String username = "poo23";
             String password = "87MmfPc14q7ZChaqrK8X";
             return DriverManager.getConnection(url, username, password);

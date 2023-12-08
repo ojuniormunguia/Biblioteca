@@ -21,9 +21,13 @@ public class SrvBusqueda extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
+        
+        
 
         try {
             // Extract form parameters
+            String nombreDocumento = request.getParameter("nombre_documento");
             String tipoDocumentos = request.getParameter("tipo_documentos");
             String ubicacionFisica = request.getParameter("ubicacion_fisica");
             String cantidadesEjemplares = request.getParameter("cantidades_ejemplares");
@@ -34,6 +38,38 @@ public class SrvBusqueda extends HttpServlet {
             String ISBN = request.getParameter("ISBN");
             String releaseDate = request.getParameter("releasedate");
             String imageUrl = request.getParameter("image_url");
+            
+            String actionUrl = "SrvDocumentosAdv?";
+            if (nombreDocumento != null) {
+                actionUrl += "nombre_documento=" + nombreDocumento;
+            }
+            if (tipoDocumentos != null) {
+                actionUrl += "&tipo_documentos=" + tipoDocumentos;
+            }
+            if (ubicacionFisica != null) {
+                actionUrl += "&ubicacion_fisica=" + ubicacionFisica;
+            }
+            if (cantidadesEjemplares != null) {
+                actionUrl += "&cantidades_ejemplares=" + cantidadesEjemplares;
+            }
+            if (ejemplaresPrestados != null) {
+                actionUrl += "&ejemplares_prestados=" + ejemplaresPrestados;
+            }
+            if (autor != null) {
+                actionUrl += "&autor=" + autor;
+            }
+            if (genero != null) {
+                actionUrl += "&genero=" + genero;
+            }
+            if (resumen != null) {
+                actionUrl += "&resumen=" + resumen;
+            }
+            if (ISBN != null) {
+                actionUrl += "&ISBN=" + ISBN;
+            }
+            if (releaseDate != null) {
+                actionUrl += "&releaseDate=" + releaseDate;
+            }
 
             // Display the HTML form with submitted values
             out.println("<!DOCTYPE html>");
@@ -56,36 +92,40 @@ public class SrvBusqueda extends HttpServlet {
             out.println("<div class=\"image\"></div>");
             out.println("</div>");
             out.println("<div class=\"bg\">");
-            out.println("<form>");
+            
+            out.println("<form method=\"post\" action=\"" + actionUrl + "\">");
+
+            
+            out.println("<label for=\"nombre_documento\">Nombre:</label>");
+            out.println("<input type=\"text\" id=\"nombre_documento\" name=\"nombre_documento\">");
+            
             out.println("<label for=\"tipo_documentos\">Tipo de Documentos:</label>");
-            out.println("<input type=\"text\" id=\"tipo_documentos\" name=\"tipo_documentos\" value=\"" + tipoDocumentos + "\" required>");
+            out.println("<input type=\"text\" id=\"tipo_documentos\" name=\"tipo_documentos\">");
 
             out.println("<label for=\"ubicacion_fisica\">Ubicación Física:</label>");
-            out.println("<input type=\"text\" id=\"ubicacion_fisica\" name=\"ubicacion_fisica\" value=\"" + ubicacionFisica + "\" required>");
+            out.println("<input type=\"text\" id=\"ubicacion_fisica\" name=\"ubicacion_fisica\">");
 
             out.println("<label for=\"cantidades_ejemplares\">Cantidad de Ejemplares:</label>");
-            out.println("<input type=\"number\" id=\"cantidades_ejemplares\" name=\"cantidades_ejemplares\" value=\"" + cantidadesEjemplares + "\" required>");
+            out.println("<input type=\"number\" id=\"cantidades_ejemplares\" name=\"cantidades_ejemplares\">");
 
             out.println("<label for=\"ejemplares_prestados\">Ejemplares Prestados:</label>");
-            out.println("<input type=\"number\" id=\"ejemplares_prestados\" name=\"ejemplares_prestados\" value=\"" + ejemplaresPrestados + "\" required>");
+            out.println("<input type=\"number\" id=\"ejemplares_prestados\" name=\"ejemplares_prestados\">");
 
             out.println("<label for=\"autor\">Autor:</label>");
-            out.println("<input type=\"text\" id=\"autor\" name=\"autor\" value=\"" + autor + "\" required>");
+            out.println("<input type=\"text\" id=\"autor\" name=\"autor\">");
 
             out.println("<label for=\"genero\">Género:</label>");
-            out.println("<input type=\"text\" id=\"genero\" name=\"genero\" value=\"" + genero + "\" required>");
+            out.println("<input type=\"text\" id=\"genero\" name=\"genero\">");
 
             out.println("<label for=\"resumen\">Resumen:</label>");
-            out.println("<textarea id=\"resumen\" name=\"resumen\" required>" + resumen + "</textarea>");
+            out.println("<textarea id=\"resumen\" name=\"resumen\" ></textarea>");
 
             out.println("<label for=\"ISBN\">ISBN:</label>");
-            out.println("<input type=\"text\" id=\"ISBN\" name=\"ISBN\" value=\"" + ISBN + "\" required>");
+            out.println("<input type=\"text\" id=\"ISBN\" name=\"ISBN\" >");
 
             out.println("<label for=\"releasedate\">Fecha de Publicación:</label>");
-            out.println("<input type=\"text\" id=\"releasedate\" name=\"releasedate\" value=\"" + releaseDate + "\" required>");
+            out.println("<input type=\"text\" id=\"releasedate\" name=\"releasedate\" >");
 
-            out.println("<label for=\"image_url\">URL de la Imagen:</label>");
-            out.println("<input type=\"text\" id=\"image_url\" name=\"image_url\" value=\"" + imageUrl + "\" required>");
 
             out.println("<input type=\"submit\" value=\"Submit\">");
             out.println("</form>");
@@ -95,7 +135,8 @@ public class SrvBusqueda extends HttpServlet {
             out.println("</div>");
             out.println("</body>");
             out.println("</html>");
-
+            
+            
         } finally {
             out.close();
         }

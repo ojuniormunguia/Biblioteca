@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import AccesoDatos.DatabaseConnection;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,79 +13,141 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "SrvDocumentos", urlPatterns = {"/SrvDocumentos"})
-public class SrvDocumentos extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-    
+import AccesoDatos.DatabaseConnection;
 
+@WebServlet(name = "SrvDocumentosAdv", urlPatterns = { "/SrvDocumentosAdv" })
+public class SrvDocumentosAdv extends HttpServlet {
+    private static final long serialVersionUID = 1L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
 
         try {
-            // Get user input from the form
+            // Get search criteria from request parameters
             String id = request.getParameter("id");
             String nombreDocumento = request.getParameter("nombre_documento");
-            String generofilter = request.getParameter("generofilter");
-            String filter;
-            String sql;
-
-            
+            String tipoDocumentos = request.getParameter("tipo_documentos");
+            String ubicacionFisica = request.getParameter("ubicacion_fisica");
+            String cantidadesEjemplares = request.getParameter("cantidades_ejemplares");
+            String ejemplaresPrestados = request.getParameter("ejemplares_prestados");
+            String autor = request.getParameter("autor");
+            String genero = request.getParameter("genero");
+            String resumen = request.getParameter("resumen");
+            String ISBN = request.getParameter("ISBN");
+            String releaseDate = request.getParameter("releasedate");
+            String imageUrl = request.getParameter("image_url");
 
             // Establish a database connection
             try (Connection connection = DatabaseConnection.getConnection()) {
-                // Create a SQL query based on the user input
-                if (request.getParameter("search") != null) {
-                    // Handle the search operation here
-                    // Modify the SQL query accordingly and set the parameters
-                    sql = "SELECT * FROM documentos WHERE nombre_documento LIKE ?";
-                    nombreDocumento = "%" + nombreDocumento + "%";
-                } else {
-                    // Check if id is not null before invoking isEmpty()
-                    if (id != null && !id.isEmpty()) {
-                                    if(generofilter != null){
-                                        filter = " AND genero = '" + generofilter + "'";
-                                    }
-                                    else{
-                                        filter = "";
-                                     }
-                        sql = "SELECT * FROM documentos WHERE id = ?" + filter;
-                    } else if (nombreDocumento != null && !nombreDocumento.isEmpty()) {
-                                    if(generofilter != null){
-                                        filter = " AND genero = '" + generofilter + "'";
-                                    }
-                                    else{
-                                        filter = "";
-                                     }
-                        sql = "SELECT * FROM documentos WHERE nombre_documento LIKE ?" + filter;
-                        nombreDocumento = "%" + nombreDocumento + "%";
-                    } else {
-                                    if(generofilter != null){
-                                        filter = " WHERE genero = '" + generofilter + "'";
-                                    }
-                                    else{
-                                        filter = "";
-                                     }
-                        sql = "SELECT * FROM documentos" + filter;
-                    }
+                // Build the SQL query based on the search criteria
+                String sql = "SELECT * FROM documentos WHERE 1=1";
+
+                if (id != null && !id.isEmpty()) {
+                    sql += " AND id = ?";
                 }
 
-                // Prepare the SQL query
+                if (nombreDocumento != null && !nombreDocumento.isEmpty()) {
+                    sql += " AND nombre_documento LIKE ?";
+                    nombreDocumento = "%" + nombreDocumento + "%";
+                }
+                
+                if (tipoDocumentos != null && !tipoDocumentos.isEmpty()) {
+                    sql += " AND tipo_documentos LIKE ?";
+                    tipoDocumentos = "%" + tipoDocumentos + "%";
+                }                
+
+                if (ubicacionFisica != null && !ubicacionFisica.isEmpty()) {
+                    sql += " AND ubicacion_fisica LIKE ?";
+                    ubicacionFisica = "%" + ubicacionFisica + "%";
+                }     
+
+                if (cantidadesEjemplares != null && !cantidadesEjemplares.isEmpty()) {
+                    sql += " AND cantidades_ejemplares LIKE ?";
+                    cantidadesEjemplares = "%" + cantidadesEjemplares + "%";
+                }  
+                
+                if (autor != null && !autor.isEmpty()) {
+                    sql += " AND autor LIKE ?";
+                    autor = "%" + autor + "%";
+                } 
+                
+                if (genero != null && !genero.isEmpty()) {
+                    sql += " AND genero LIKE ?";
+                    genero = "%" + genero + "%";
+                } 
+                
+                if (resumen != null && !resumen.isEmpty()) {
+                    sql += " AND resumen LIKE ?";
+                    resumen = "%" + resumen + "%";
+                } 
+                
+                if (ISBN != null && !ISBN.isEmpty()) {
+                    sql += " AND ISBN LIKE ?";
+                    ISBN = "%" + ISBN + "%";
+                } 
+                
+                if (releaseDate != null && !releaseDate.isEmpty()) {
+                    sql += " AND releaseDate LIKE ?";
+                    releaseDate = "%" + releaseDate + "%";
+                } 
+ 
+                // Add conditions for other search criteria as needed
+
                 try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                     // Set parameters for the SQL query
+                    int parameterIndex = 1;
+
                     if (id != null && !id.isEmpty()) {
-                        preparedStatement.setString(1, id);
-                    } else if (nombreDocumento != null && !nombreDocumento.isEmpty()) {
-                        preparedStatement.setString(1, nombreDocumento);
+                        preparedStatement.setString(parameterIndex++, id);
                     }
+
+                    if (nombreDocumento != null && !nombreDocumento.isEmpty()) {
+                        preparedStatement.setString(parameterIndex++, nombreDocumento);
+                    }
+                    
+                    if (tipoDocumentos != null && !tipoDocumentos.isEmpty()) {
+                        preparedStatement.setString(parameterIndex++, tipoDocumentos);
+                    }
+
+                    if (ubicacionFisica != null && !ubicacionFisica.isEmpty()) {
+                        preparedStatement.setString(parameterIndex++, ubicacionFisica);
+                    }
+
+                    if (cantidadesEjemplares != null && !cantidadesEjemplares.isEmpty()) {
+                        preparedStatement.setString(parameterIndex++, cantidadesEjemplares);
+                    }
+
+                    if (ejemplaresPrestados != null && !ejemplaresPrestados.isEmpty()) {
+                        preparedStatement.setString(parameterIndex++, ejemplaresPrestados);
+                    }
+
+                    if (autor != null && !autor.isEmpty()) {
+                        preparedStatement.setString(parameterIndex++, autor);
+                    }
+
+                    if (genero != null && !genero.isEmpty()) {
+                        preparedStatement.setString(parameterIndex++, genero);
+                    }
+
+                    if (resumen != null && !resumen.isEmpty()) {
+                        preparedStatement.setString(parameterIndex++, resumen);
+                    }
+
+                    if (ISBN != null && !ISBN.isEmpty()) {
+                        preparedStatement.setString(parameterIndex++, ISBN);
+                    }
+
+                    if (releaseDate != null && !releaseDate.isEmpty()) {
+                        preparedStatement.setString(parameterIndex++, releaseDate);
+                    }
+
+                    // Set parameters for other search criteria
 
                     // Execute the query
                     try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                        // Display the results in the servlet response
-                        
+                        // Display the search results
                         out.println("<!DOCTYPE html>");
                         out.println("<html>");
                         out.println("<head>");
@@ -205,9 +266,8 @@ public class SrvDocumentos extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
             out.println("Error: " + e.getMessage());
-            
-            
+        } finally {
+            out.close();
         }
-        
     }
 }

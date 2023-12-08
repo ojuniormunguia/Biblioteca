@@ -39,7 +39,7 @@ body {
   border-radius: 9px;
   height: 23rem;
   transition: box-shadow 500ms, padding 300ms;
-  transition-timing-function: ease-in-out;
+  transition-timing-function: ease-out;
 }
 .card:hover {
   padding:18px;
@@ -327,3 +327,7 @@ label {
 
 }
 
+
+#ejemplares_prestados {
+
+}

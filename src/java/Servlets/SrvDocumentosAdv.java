@@ -241,11 +241,13 @@ public class SrvDocumentosAdv extends HttpServlet {
                         out.println("<label for=\"search\">Buscar:</label>");
                         out.println("<input class=\"Buscar-texto\" type=\"text\" id=\"nombre_documento\" name=\"nombre_documento\">");
                         out.println("<input class=\"Buscar-boton\" type=\"submit\" value=\"Buscar\" name=\"search\">");
-                        out.println("<select class=\"filtros\" name=\"genero\">");
+                        out.println("<select class=\"filtros\" name=\"generofilter\">");  // Ensure the name attribute matches with the servlet code
                         out.println("  <option value=\"\">Todos</option>");
                         out.println("  <option value=\"Aventura\">Aventura</option>");
                         out.println("  <option value=\"Romance\">Romance</option>");
-                        // Add more genre options as needed
+                        out.println("  <option value=\"Ciencia Ficción\">Ciencia Ficción</option>");
+                        out.println("  <option value=\"Thriller\">Thriller</option>");
+                                                // Add more genre options as needed
                         out.println("</select>");
                         out.println("</form>");
                         
@@ -253,6 +255,7 @@ public class SrvDocumentosAdv extends HttpServlet {
                         out.println("<form class=\"BusquedaAv\" method=\"post\" action=\"SrvBusqueda\">");
                         out.println("<input class=\"Buscar-boton\" type=\"submit\" value=\"Búsqueda avanzada\" name=\"detalles\">");
                         out.println("</form>");
+                        
                         
                         out.println("</div>"); // Close principal
                         out.println("</div>"); // Close fondo

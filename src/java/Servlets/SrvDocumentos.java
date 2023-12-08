@@ -17,8 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "SrvDocumentos", urlPatterns = {"/SrvDocumentos"})
 public class SrvDocumentos extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    
-
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -27,66 +25,48 @@ public class SrvDocumentos extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
-            // Get user input from the form
             String id = request.getParameter("id");
             String nombreDocumento = request.getParameter("nombre_documento");
             String generofilter = request.getParameter("generofilter");
-            String filter;
             String sql;
 
-            
-
-            // Establish a database connection
             try (Connection connection = DatabaseConnection.getConnection()) {
-                // Create a SQL query based on the user input
                 if (request.getParameter("search") != null) {
-                    // Handle the search operation here
-                    // Modify the SQL query accordingly and set the parameters
                     sql = "SELECT * FROM documentos WHERE nombre_documento LIKE ?";
+                    if (generofilter != null && !generofilter.isEmpty()) {
+                        sql += " AND genero = ?";
+                    }
                     nombreDocumento = "%" + nombreDocumento + "%";
                 } else {
-                    // Check if id is not null before invoking isEmpty()
                     if (id != null && !id.isEmpty()) {
-                                    if(generofilter != null){
-                                        filter = " AND genero = '" + generofilter + "'";
-                                    }
-                                    else{
-                                        filter = "";
-                                     }
-                        sql = "SELECT * FROM documentos WHERE id = ?" + filter;
+                        sql = "SELECT * FROM documentos WHERE id = ?";
+                        if(generofilter != null && !generofilter.isEmpty()){
+                            sql += " AND genero = ?";
+                        }
                     } else if (nombreDocumento != null && !nombreDocumento.isEmpty()) {
-                                    if(generofilter != null){
-                                        filter = " AND genero = '" + generofilter + "'";
-                                    }
-                                    else{
-                                        filter = "";
-                                     }
-                        sql = "SELECT * FROM documentos WHERE nombre_documento LIKE ?" + filter;
+                        sql = "SELECT * FROM documentos WHERE nombre_documento LIKE ?";
+                        if(generofilter != null && !generofilter.isEmpty()){
+                            sql += " AND genero = ?";
+                        }
                         nombreDocumento = "%" + nombreDocumento + "%";
                     } else {
-                                    if(generofilter != null){
-                                        filter = " WHERE genero = '" + generofilter + "'";
-                                    }
-                                    else{
-                                        filter = "";
-                                     }
-                        sql = "SELECT * FROM documentos" + filter;
+                        sql = "SELECT * FROM documentos";
+                        if(generofilter != null && !generofilter.isEmpty()){
+                            sql += " WHERE genero = ?";
+                        }
                     }
                 }
 
-                // Prepare the SQL query
                 try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                    // Set parameters for the SQL query
-                    if (id != null && !id.isEmpty()) {
-                        preparedStatement.setString(1, id);
-                    } else if (nombreDocumento != null && !nombreDocumento.isEmpty()) {
-                        preparedStatement.setString(1, nombreDocumento);
+                    int paramIndex = 1;
+                    if (nombreDocumento != null && !nombreDocumento.isEmpty()) {
+                        preparedStatement.setString(paramIndex++, nombreDocumento);
+                    }
+                    if (generofilter != null && !generofilter.isEmpty()) {
+                        preparedStatement.setString(paramIndex, generofilter);
                     }
 
-                    // Execute the query
                     try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                        // Display the results in the servlet response
-                        
                         out.println("<!DOCTYPE html>");
                         out.println("<html>");
                         out.println("<head>");
@@ -180,11 +160,13 @@ public class SrvDocumentos extends HttpServlet {
                         out.println("<label for=\"search\">Buscar:</label>");
                         out.println("<input class=\"Buscar-texto\" type=\"text\" id=\"nombre_documento\" name=\"nombre_documento\">");
                         out.println("<input class=\"Buscar-boton\" type=\"submit\" value=\"Buscar\" name=\"search\">");
-                        out.println("<select class=\"filtros\" name=\"genero\">");
+                        out.println("<select class=\"filtros\" name=\"generofilter\">");  // Ensure the name attribute matches with the servlet code
                         out.println("  <option value=\"\">Todos</option>");
                         out.println("  <option value=\"Aventura\">Aventura</option>");
                         out.println("  <option value=\"Romance\">Romance</option>");
-                        // Add more genre options as needed
+                        out.println("  <option value=\"Ciencia Ficción\">Ciencia Ficción</option>");
+                        out.println("  <option value=\"Thriller\">Thriller</option>");
+//                                                 Add more genre options as needed
                         out.println("</select>");
                         out.println("</form>");
                         
@@ -192,6 +174,13 @@ public class SrvDocumentos extends HttpServlet {
                         out.println("<form class=\"BusquedaAv\" method=\"post\" action=\"SrvBusqueda\">");
                         out.println("<input class=\"Buscar-boton\" type=\"submit\" value=\"Búsqueda avanzada\" name=\"detalles\">");
                         out.println("</form>");
+                        
+                        String filtrando;
+                        if(generofilter == null || generofilter.isEmpty()){
+                        filtrando = "";
+                        }else{
+                        filtrando = "Filtrando por: " + generofilter;
+                        out.println("<h1>" + filtrando + "</h1>");}
                         
                         out.println("</div>"); // Close principal
                         out.println("</div>"); // Close fondo
@@ -205,9 +194,6 @@ public class SrvDocumentos extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
             out.println("Error: " + e.getMessage());
-            
-            
         }
-        
     }
 }

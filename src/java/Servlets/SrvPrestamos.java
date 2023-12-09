@@ -49,8 +49,9 @@ public class SrvPrestamos extends HttpServlet {
                     out.println("<form method=\"post\" action=\"index.jsp\">");
                         
                         
-                        out.println("<input class=\"Buscar-boton\" type=\"submit\" value=\"Cerrar sesión\" name=\"Login\">");
+                        out.println("<input class=\"Buscar-boton\" type=\"submit\" value=\"Cerrar sesión\" name=\"Login\" style=\"margin-top:15px;\">");
                         
+                    out.println("</form>");
                     out.println("</div>");    
                     out.println("<div class=\"menu-3\"></div>");
                     out.println("</div>");

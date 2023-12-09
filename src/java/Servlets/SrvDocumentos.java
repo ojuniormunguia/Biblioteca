@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "SrvDocumentos", urlPatterns = {"/SrvDocumentos"})
 public class SrvDocumentos extends HttpServlet {
@@ -23,11 +24,24 @@ public class SrvDocumentos extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
+
 
         try {
             
-            String userid = request.getParameter("userid");
-            String permiso = request.getParameter("tipo_usuario");
+            HttpSession session = request.getSession();
+
+String userid = request.getParameter("userid");
+        if (userid == null || userid.isEmpty()) {
+            userid = getStringFromObject(session.getAttribute("userid"));
+        }
+
+        String permiso = request.getParameter("tipo_usuario");
+        if (permiso == null || permiso.isEmpty()) {
+            permiso = getStringFromObject(session.getAttribute("tipo_usuario"));
+        }
+            
+            
             String nombreDocumento = request.getParameter("nombre_documento");
             String generofilter = request.getParameter("generofilter");
             String sql;
@@ -110,17 +124,18 @@ public class SrvDocumentos extends HttpServlet {
                         //DERECHA
                         out.println("<div class=\"menu-3\">");
                         
-                        if (userid == null){
+                        if (userid == null || userid.isEmpty()){
                             
-                        out.println("<form method=\"post\" action=\"Login.jsp\">");
-                        out.println("<input class=\"button-2\" type=\"submit\" value=\"Iniciar sesión\" name=\"Login\">");
+                        out.println("<form method=\"post\" action=\"index.jsp\">");
+                        out.println("<input class=\"button-2\" type=\"submit\" value=\"iniciar sesión\" name=\"Login\">");
+                        out.println("</form>");
                         
                         }else{
                             
                         out.println("<form method=\"post\" action=\"SrvPrestamos\">");
                         
-                        out.println("<input type=\"hidden\" id=\"userid\" name=\"userid\" value=\"" + request.getParameter("userid") + "\">");
-                        out.println("<input type=\"hidden\" id=\"tipo_usuario\" name=\"tipo_usuario\" value=\"" + request.getParameter("tipo_usuario") + "\">");
+                        out.println("<input type=\"hidden\" id=\"userid\" name=\"userid\" value=\"" + userid + "\">");
+                        out.println("<input type=\"hidden\" id=\"tipo_usuario\" name=\"tipo_usuario\" value=\"" + permiso + "\">");
                         
                         out.println("<input class=\"button-2\" type=\"submit\" value=\"ver préstamos\" name=\"Login\">");
                         
@@ -166,8 +181,8 @@ public class SrvDocumentos extends HttpServlet {
                             //Botón a editar
                             out.println("<form method=\"post\" action=\"Form.jsp\">");
                             
-                            out.println("<input type=\"hidden\" id=\"userid\" name=\"userid\" value=\"" + request.getParameter("userid") + "\">");
-                            out.println("<input type=\"hidden\" id=\"tipo_usuario\" name=\"tipo_usuario\" value=\"" + request.getParameter("tipo_usuario") + "\">");
+                            out.println("<input type=\"hidden\" id=\"userid\" name=\"userid\" value=\"" + userid + "\">");
+                            out.println("<input type=\"hidden\" id=\"tipo_usuario\" name=\"tipo_usuario\" value=\"" + permiso + "\">");
                             
                             out.println("<input type=\"hidden\" name=\"id\" value=\"" + resultSet.getString("id") + "\">");
                             out.println("<input type=\"hidden\" name=\"nombre_documento\" value=\"" + resultSet.getString("nombre_documento") +"\">");
@@ -231,6 +246,7 @@ public class SrvDocumentos extends HttpServlet {
                         filtrando = "Filtrando por: " + generofilter;
                         out.println("<h1>" + filtrando + "</h1>");}
                         
+                        //out.println("<h1>id= " + userid + ",  permisos= " + permiso + "</h1>");
                         
                         
                         out.println("</div>"); // Close principal
@@ -246,5 +262,14 @@ public class SrvDocumentos extends HttpServlet {
             e.printStackTrace();
             out.println("Error: " + e.getMessage());
         }
+    }
+    
+    @Override
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    doPost(request, response); // Redirecting GET request to doPost
+}
+private String getStringFromObject(Object obj) {
+        return obj != null ? obj.toString() : null;
     }
 }

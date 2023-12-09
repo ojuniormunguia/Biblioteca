@@ -1,85 +1,75 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package Servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author theoj
- */
+import AccesoDatos.DatabaseConnection;
+import javax.servlet.http.HttpSession;
+
+@WebServlet(name = "SrvDevolver", urlPatterns = {"/SrvDevolver"})
 public class SrvDevolver extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet SrvDevolver</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet SrvDevolver at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        // Retrieve the document ID from the request
+        String id = request.getParameter("prestamoid");
+        String userid = request.getParameter("userid");
+        String tipo_usuario = request.getParameter("tipo_usuario");
+
+        // Delete the document based on the ID
+        boolean deletionSuccessful = deleteDocument(id);
+
+        if (deletionSuccessful) {
+            // Redirect to SrvDocumentos after successful deletion
+            HttpSession session = request.getSession();
+            session.setAttribute("userid", userid);
+            session.setAttribute("tipo_usuario", tipo_usuario);
+            response.sendRedirect(request.getContextPath() + "/SrvContinuar");
+        } else {
+            // Forward to an error page if deletion fails
+            request.getRequestDispatcher("/errorPage.jsp").forward(request, response);
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    private boolean deleteDocument(String id) {
+        try (Connection connection = DatabaseConnection.getInstance().getConnection()) {
+            // Create a prepared statement to execute the DELETE query
+            String deleteQuery = "CALL DevolverPrestamo(?)";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+                // Set the ID parameter
+                preparedStatement.setString(1, id);
+
+                // Execute the DELETE query
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                // Return true if deletion is successful (at least one row affected), false otherwise
+                return rowsAffected > 0;
+            }
+        } catch (SQLException e) {
+            // Log the exception or handle it according to your needs
+            e.printStackTrace();
+
+            // Deletion failed
+            return false;
+        }
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        // Forward to the doPost method for handling the deletion
+        doPost(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+        return "SrvDelete Servlet";
+    }
 }

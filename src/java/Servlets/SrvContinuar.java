@@ -16,7 +16,6 @@ public class SrvContinuar extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Display a simple HTML form with a "Continuar" button
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         
@@ -24,20 +23,16 @@ public class SrvContinuar extends HttpServlet {
         String userid = (String) session.getAttribute("userid");
         String tipo_usuario = (String) session.getAttribute("tipo_usuario");
 
-
         out.println("<!DOCTYPE html>");
         out.println("<html>");
         out.println("<head>");
         out.println("<meta charset=\"utf-8\" />");
-        out.println("<meta name=\"viewport\" content=\"initial-scale=1, width=device-width\" />");
+        // Redirect with session attributes in URL
+        out.println("<meta http-equiv=\"refresh\" content=\"1;url=" + request.getContextPath() + "/SrvDocumentos?userid=" + userid + "&tipo_usuario=" + tipo_usuario + "\" />");
         out.println("<title>Continuar</title>");
         out.println("</head>");
         out.println("<body>");
-        out.println("<form method=\"post\" action=\"" + request.getContextPath() + "/SrvDocumentos\">");
-        out.println("<input type=\"hidden\" id=\"userid\" name=\"userid\" value=\"" + userid + "\">");
-        out.println("<input type=\"hidden\" id=\"tipo_usuario\" name=\"tipo_usuario\" value=\"" + tipo_usuario + "\">");
-        out.println("<input class=\"Buscar-boton\" type=\"submit\" value=\"Continuar\">");
-        out.println("</form>");
+        out.println("<p>Redirigiendo, por favor espere...</p>");
         out.println("</body>");
         out.println("</html>");
     }

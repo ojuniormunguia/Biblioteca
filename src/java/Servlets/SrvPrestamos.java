@@ -23,6 +23,7 @@ public class SrvPrestamos extends HttpServlet {
 
         try (PrintWriter out = response.getWriter()) {
             String userid = request.getParameter("userid");
+            String tipo_usuario = request.getParameter("tipo_usuario");
             String sql = "CALL Prestamos(?)";
 
             try (Connection connection = DatabaseConnection.getConnection();
@@ -44,7 +45,13 @@ public class SrvPrestamos extends HttpServlet {
                     // Include menu-superior section
                     out.println("<div class=\"menu-superior\">");
                     out.println("<div class=\"menu-1\"></div>");
-                    out.println("<div class=\"menu-2\"></div>");
+                    out.println("<div class=\"menu-2\">");
+                    out.println("<form method=\"post\" action=\"index.jsp\">");
+                        
+                        
+                        out.println("<input class=\"Buscar-boton\" type=\"submit\" value=\"Cerrar sesión\" name=\"Login\">");
+                        
+                    out.println("</div>");    
                     out.println("<div class=\"menu-3\"></div>");
                     out.println("</div>");
 
@@ -57,7 +64,14 @@ public class SrvPrestamos extends HttpServlet {
                         
                         out.println("<h3>" + resultSet.getString("ejemp") + "</h3>");
                         out.println("<p><strong>Fecha de préstamo: </strong>" + resultSet.getString("fecha_prestamo") + "</p>");
-                        out.println("<p><strong>Fecha de préstamo: </strong>" + resultSet.getString("fecha_prestamo") + "</p>");
+                        out.println("<p><strong>Devolver antes de: </strong>" + resultSet.getString("fecha_devolucion") + "</p>");
+                        
+                        out.println("<form method=\"post\" action=\"SrvDevolver\">");
+                        
+                        out.println("<input type=\"hidden\" id=\"userid\" name=\"userid\" value=\"" + userid + "\">");
+                        out.println("<input type=\"hidden\" id=\"tipo_usuario\" name=\"tipo_usuario\" value=\"" + tipo_usuario + "\">");
+                        out.println("<input type=\"hidden\" id=\"prestamoid\" name=\"prestamoid\" value=\"" + resultSet.getString("prestamoid") + "\">");
+                        out.println("<input class=\"Buscar-boton\" type=\"submit\" value=\"devolver\" name=\"Login\">");
                         
                         out.println("</div>"); // Close container
                         out.println("</div>"); // Close container

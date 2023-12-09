@@ -26,7 +26,7 @@ public class SrvDocumentosAdv extends HttpServlet {
 
         try {
             // Get search criteria from request parameters
-            String id = request.getParameter("id");
+            String bookId = request.getParameter("bookId");
             String nombreDocumento = request.getParameter("nombre_documento");
             String tipoDocumentos = request.getParameter("tipo_documentos");
             String ubicacionFisica = request.getParameter("ubicacion_fisica");
@@ -44,7 +44,7 @@ public class SrvDocumentosAdv extends HttpServlet {
                 // Build the SQL query based on the search criteria
                 String sql = "SELECT * FROM documentos WHERE 1=1";
 
-                if (id != null && !id.isEmpty()) {
+                if (bookId != null && !bookId.isEmpty()) {
                     sql += " AND id = ?";
                 }
 
@@ -99,8 +99,8 @@ public class SrvDocumentosAdv extends HttpServlet {
                     // Set parameters for the SQL query
                     int parameterIndex = 1;
 
-                    if (id != null && !id.isEmpty()) {
-                        preparedStatement.setString(parameterIndex++, id);
+                    if (bookId != null && !bookId.isEmpty()) {
+                        preparedStatement.setString(parameterIndex++, bookId);
                     }
 
                     if (nombreDocumento != null && !nombreDocumento.isEmpty()) {

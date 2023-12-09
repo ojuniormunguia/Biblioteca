@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "SrvAdd", urlPatterns = {"/SrvAdd"})
 public class SrvAdd extends HttpServlet {
@@ -24,33 +25,31 @@ public class SrvAdd extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
-            // Retrieve form data
-            int id = parseIntegerParameter(request.getParameter("id"));
+            int id = parseIntegerParameter(request.getParameter("id")); // Ensure this method is robust
+            String userid = request.getParameter("userid");
+            String tipo_usuario = request.getParameter("tipo_usuario");
 
             if (id == 0) {
-                // Insertion
-                try {
-                    performInsertion(request, response, out);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    out.println("Error during insertion: " + e.getMessage());
-                }
+                performInsertion(request, response, out); // Handle insertion
             } else {
-                // Update
-                try {
-                    performUpdate(request, response, out, id);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    out.println("Error during update: " + e.getMessage());
-                }
+                performUpdate(request, response, out, id); // Handle update
             }
         } catch (NumberFormatException e) {
-            e.printStackTrace();
-            out.println("Error: " + e.getMessage());
+            out.println("Invalid ID format.");
+        } catch (SQLException e) {
+            out.println("Database error: " + e.getMessage());
+            // Log the exception using a logging framework
+        } catch (Exception e) {
+            out.println("An unexpected error occurred: " + e.getMessage());
+            // Log the exception
         }
     }
 
     private void performInsertion(HttpServletRequest request, HttpServletResponse response, PrintWriter out) throws SQLException, IOException {
+        
+        String userid = request.getParameter("userid");
+        String tipo_usuario = request.getParameter("tipo_usuario");
+        
         String tipoDocumento = request.getParameter("tipo_documento");
         tipoDocumento = (tipoDocumento != null && !tipoDocumento.isEmpty()) ? tipoDocumento : "DefaultTipoDocumento";
 
@@ -69,6 +68,10 @@ public class SrvAdd extends HttpServlet {
         String isbn = request.getParameter("ISBN");
         String releaseDate = request.getParameter("releasedate");
         String imageUrl = request.getParameter("image_url");
+        
+        HttpSession session = request.getSession();
+        session.setAttribute("userid", userid);
+        session.setAttribute("tipo_usuario", tipo_usuario);
 
         // Establish a database connection
         try (Connection connection = DatabaseConnection.getConnection()) {
@@ -106,6 +109,10 @@ public class SrvAdd extends HttpServlet {
     }
 
     private void performUpdate(HttpServletRequest request, HttpServletResponse response, PrintWriter out, int id) throws SQLException, IOException {
+        
+        String userid = request.getParameter("userid");
+        String tipo_usuario = request.getParameter("tipo_usuario");
+        
         String tipoDocumento = request.getParameter("tipo_documento");
         tipoDocumento = (tipoDocumento != null && !tipoDocumento.isEmpty()) ? tipoDocumento : "DefaultTipoDocumento";
 
@@ -132,6 +139,12 @@ public class SrvAdd extends HttpServlet {
         String sql = "UPDATE documentos SET tipo_documento=?, nombre_documento=?, ubicacion_fisica=?, "
                 + "cantidad_ejemplares=?, ejemplares_prestados=?, autor=?, genero=?, resumen=?, ISBN=?, releasedate=?, image_url=? "
                 + "WHERE id=?";
+        
+        
+        HttpSession session = request.getSession();
+        session.setAttribute("userid", userid);
+        session.setAttribute("tipo_usuario", tipo_usuario);
+
 
         // Prepare the SQL query
         try (Connection connection = DatabaseConnection.getConnection();

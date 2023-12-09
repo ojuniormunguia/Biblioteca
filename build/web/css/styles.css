@@ -11,6 +11,23 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   box-sizing: border-box;
 }
 
+.button-2{
+  background:white;
+  border: none;
+  font-weight:bold;
+  color: #c88613;
+  font-size: 11pt;
+  margin-top:17px;
+}
+
+.button-2:hover{
+  background:white;
+  border: none;
+  font-weight:bold;
+  color: #352100;
+  font-size: 11pt;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -29,7 +46,13 @@ body {
   
 }
 
-
+.top-image {
+    display: block;
+    margin: auto; /* Center the image */
+    margin-top: 20px;
+    max-height:35%; /* Make sure the image is responsive */
+    height: auto; /* Maintain aspect ratio */
+}
 .card {
   box-shadow: 0 4px 70px 0 rgb(235 207 207 / 56%);
   padding: 20px;
@@ -60,21 +83,29 @@ body {
 
 .menu-1 {
     position: absolute;
-    width: 14.51%;
+    width: 15%;
     top: 0;
-    right: 85.49%;
+    right: 0;
     left: 0;
-    background-color: #d5c3ed;
     height: 4.25rem;
     overflow: hidden;
   }
   .menu-2 {
     position: absolute;
-    width: 68.27%;
+    width: 70%;
     top: 0;
-    right: 17.22%;
-    left: 14.51%;
-    background-color: #a08dd7;
+    right: 15%;
+    left: 15%;
+  }
+
+.menu-3 {
+    position: absolute;
+    width: 15%;
+    top: 0;
+    right: 0%;
+    left: 85;
+    height: 4.25rem;
+    overflow: hidden;
   }
   .frame-inner,
   .menu-2,
@@ -162,7 +193,7 @@ body {
     top: 0;
     right: 6.07%;
     left: 6.07%;
-    height: 18rem;
+    height: 19rem;
   }
   .fondo {
     height: calc(100% - 3px);
@@ -219,11 +250,11 @@ body {
     margin-top: 20px; 
     width: 75%;
     background: white;
-    padding-top: 8px;
-    padding-bottom: 8px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     padding-left: 25px;
     margin: auto;
-    margin-top: 100px;
+    margin-top: 20px;
     padding-right: 25px; 
     box-shadow: 0 4px 30px 0 rgb(246 184 184 / 53%);
     border-radius:6px;
@@ -262,8 +293,14 @@ label {
     transition: box-shadow 500ms, background-color 200ms, border-color 200ms;
     transition-timing-function: ease-in-out;
 }
+
+.BusquedaAv.Buscar-boton{
+  margin-top:-10px;
+}
+
+
 .BusquedaAv{
-  margin-top: 2rem;
+  margin-top: 20px;
   text-align: center;
 }
 

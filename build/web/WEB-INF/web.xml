@@ -36,6 +36,22 @@
         <servlet-name>SrvDocumentosAdv</servlet-name>
         <servlet-class>Servlets.SrvDocumentosAdv</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SrvRentar</servlet-name>
+        <servlet-class>Servlets.SrvRentar</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SrvPrestamos</servlet-name>
+        <servlet-class>Servlets.SrvPrestamos</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SrvDevolver</servlet-name>
+        <servlet-class>Servlets.SrvDevolver</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SrvLogin</servlet-name>
+        <servlet-class>Servlets.SrvLogin</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SrvDocumentos</servlet-name>
         <url-pattern>/SrvDocumentos</url-pattern>
@@ -71,6 +87,22 @@
     <servlet-mapping>
         <servlet-name>SrvDocumentosAdv</servlet-name>
         <url-pattern>/SrvDocumentosAdv</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SrvRentar</servlet-name>
+        <url-pattern>/SrvRentar</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SrvPrestamos</servlet-name>
+        <url-pattern>/SrvPrestamos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SrvDevolver</servlet-name>
+        <url-pattern>/SrvDevolver</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SrvLogin</servlet-name>
+        <url-pattern>/SrvLogin</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

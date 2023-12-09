@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import AccesoDatos.DatabaseConnection;
+import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "SrvDelete", urlPatterns = {"/SrvDelete"})
 public class SrvDelete extends HttpServlet {
@@ -19,12 +20,17 @@ public class SrvDelete extends HttpServlet {
             throws ServletException, IOException {
         // Retrieve the document ID from the request
         String documentId = request.getParameter("id");
+        String userid = request.getParameter("userid");
+        String tipo_usuario = request.getParameter("tipo_usuario");
 
         // Delete the document based on the ID
         boolean deletionSuccessful = deleteDocument(documentId);
 
         if (deletionSuccessful) {
             // Redirect to SrvDocumentos after successful deletion
+            HttpSession session = request.getSession();
+            session.setAttribute("userid", userid);
+            session.setAttribute("tipo_usuario", tipo_usuario);
             response.sendRedirect(request.getContextPath() + "/SrvContinuar");
         } else {
             // Forward to an error page if deletion fails

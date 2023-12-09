@@ -45,6 +45,9 @@ public class SrvInfoLibro extends HttpServlet {
                     // Execute the query
                     try (ResultSet resultSet = preparedStatement.executeQuery()) {
                         // Display the results in the servlet response
+                        String userid = request.getParameter("userid");
+                        String tipo_usuario = request.getParameter("tipo_usuario");
+                        
                         out.println("<!DOCTYPE html>");
                         out.println("<html lang=\"en\">");
                         out.println("<head>");
@@ -95,6 +98,47 @@ public class SrvInfoLibro extends HttpServlet {
                             out.println("</svg>");
                             out.println(resultSet.getDouble("estrellas") + "</p>");  
                             out.println("<p>Escrito por " + resultSet.getString("autor") + "</p>");
+                            
+                            if (userid != null){
+                                //boton rentar
+                                out.println("<form method=\"post\" action=\"SrvRentar\">");
+                                
+                                out.println("<input type=\"hidden\" id=\"userid\" name=\"userid\" value=\"" + request.getParameter("userid") + "\">");
+                                out.println("<input type=\"hidden\" id=\"tipo_usuario\" name=\"tipo_usuario\" value=\"" + request.getParameter("tipo_usuario") + "\">");
+                                out.println("<input type=\"hidden\" id=\"id\" name=\"id\" value=\"" + resultSet.getString("id") + "\">");
+                                out.println("<label for=\"numberInput\">Días a rentar:</label>");
+                                out.println("<input type=\"number\" id=\"tiempo\" name=\"tiempo\">");
+                                out.println("<input class=\"Buscar-boton\" type=\"submit\" value=\"Rentar\" name=\"Rentar\">");
+                                out.println("</form>");
+                                
+                                
+                            }
+                            if ("Administrador".equals(tipo_usuario)){
+                                //boton editar
+                                out.println("<form method=\"post\" action=\"Form.jsp\">");
+                            
+                                out.println("<input type=\"hidden\" id=\"userid\" name=\"userid\" value=\"" + request.getParameter("userid") + "\">");
+                                out.println("<input type=\"hidden\" id=\"tipo_usuario\" name=\"tipo_usuario\" value=\"" + request.getParameter("tipo_usuario") + "\">");
+
+                                out.println("<input type=\"hidden\" name=\"id\" value=\"" + resultSet.getString("id") + "\">");
+                                out.println("<input type=\"hidden\" name=\"nombre_documento\" value=\"" + resultSet.getString("nombre_documento") +"\">");
+                                out.println("<input type=\"hidden\" name=\"tipo_documento\" value=\"" + resultSet.getString("tipo_documento") +"\">");
+                                out.println("<input type=\"hidden\" name=\"resumen\" value=\"" + resultSet.getString("resumen") + "\">");
+                                out.println("<input type=\"hidden\" name=\"autor\" value=\"" + resultSet.getString("autor") + "\">");
+                                out.println("<input type=\"hidden\" name=\"genero\" value=\"" + resultSet.getString("genero") + "\">");
+                                out.println("<input type=\"hidden\" name=\"ubicacion_fisica\" value=\"" + resultSet.getString("ubicacion_fisica") +"\">");
+                                out.println("<input type=\"hidden\" name=\"cantidad_ejemplares\" value=\"" + resultSet.getInt("cantidad_ejemplares") + "\">");
+                                out.println("<input type=\"hidden\" name=\"ejemplares_prestados\" value=\"" + resultSet.getInt("ejemplares_prestados") + "\">");
+                                out.println("<input type=\"hidden\" name=\"ISBN\" value=\"" +resultSet.getString("ISBN") + "\">");
+                                out.println("<input type=\"hidden\" name=\"releasedate\" value=\"" + resultSet.getString("releasedate") + "\">");
+                                out.println("<input type=\"hidden\" name=\"image_url\" value=\"" + resultSet.getString("image_url") + "\">");
+                                out.println("<input class=\"Buscar-boton\" type=\"submit\" value=\"Editar\" name=\"detalles\" style=\"margin-top:10px\">");
+                                out.println("</form>");
+                                
+                            }
+                            
+                            
+                            
                             out.println("<div class=\"bg-row\">"); //bg-row start
                             out.println("<div class=\"column left\">"); //left start
                             out.println("<p>Publicado un " + resultSet.getString("releasedate") + "</p>");

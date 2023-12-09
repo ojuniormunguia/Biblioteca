@@ -3,9 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/theoj/OneDrive/Documentos/Biblioteca/src/java/Servlets/SrvDocumentos.java</file>
-            <file>file:/C:/Users/theoj/OneDrive/Documentos/Biblioteca/src/java/Servlets/SrvDocumentosAdv.java</file>
-            <file>file:/C:/Users/theoj/OneDrive/Documentos/Biblioteca/src/java/Servlets/SrvBusqueda.java</file>
+            <file>file:/C:/Users/theoj/OneDrive/Documentos/Biblioteca/src/java/AccesoDatos/DatabaseConnection.java</file>
+            <file>file:/C:/Users/theoj/OneDrive/Documentos/Biblioteca/src/java/Servlets/SrvAdd.java</file>
         </group>
     </open-files>
 </project-private>

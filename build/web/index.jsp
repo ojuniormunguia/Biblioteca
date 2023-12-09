@@ -20,14 +20,25 @@
                 <form action="SrvDocumentos" method="post">
             
                     <h1>Bienvenido a nuestra biblioteca</h1>
-                    <p>Puede empezar iniciando sesión</p>
-                    <input type="hidden" id="id" name="id">
                     
-                    <label for="nombre_documento">Buscar por título</label>
-                    <input type="text" id="nombre_documento" name="nombre_documento">
+                    
+                    <input type="hidden" id="userid" name="userid" value=" <%= request.getParameter("userid") %> ">
+                    <input type="hidden" id="tipo_usuario" name="tipo_usuario" value=" <%= request.getParameter("tipo_usuario") %> "><!-- permisos -->
+                    
+                    
+                    
+                    <input type="hidden" id="nombre_documento" name="nombre_documento">
+                    
                     <input type="submit" value="Ir a la librería">
 
                 </form>
+                <p>O también puedes iniciar sesión:</p>
+                <form action="SrvLogin" method="post">
+                    <input type="text" id="usuario" name="usuario">       
+                    <input type="text" id="contrasena" name="contrasena">    
+                    <input type="submit" value="Ir a la librería">
+                </form>
+                   
             </div>
         </div>
     </body>

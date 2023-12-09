@@ -33,7 +33,9 @@
                 
               <h1>Editando libro</h1> 
               
-              
+              <!-- MANTIENE EL ID Y LOS PERMISOS -->
+              <input type="hidden" id="userid" name="userid" value="<%= request.getParameter("userid") %>"> 
+              <input type="hidden" id="tipo_usuario" name="tipo_usuario" value="<%= request.getParameter("tipo_usuario") %>">
               <input type="hidden" id="id" name="id" value="<%= request.getParameter("id") %>">
 
               <label for="nombre_documento">Nombre de Documentos:</label>
@@ -78,6 +80,9 @@
             %>
 
             <form action="SrvDelete" method="get">
+                <input type="hidden" id="userid" name="userid" value="<%= request.getParameter("userid") %>">
+                <input type="hidden" id="tipo_usuario" name="tipo_usuario" value="<%= request.getParameter("tipo_usuario") %>">
+                
                 <input type="hidden" id="id" name="id" value="<%= idParameter %>">
 
                 <!-- Use JSP expression to conditionally render the delete button -->

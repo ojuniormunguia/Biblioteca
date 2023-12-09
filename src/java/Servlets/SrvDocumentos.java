@@ -25,7 +25,9 @@ public class SrvDocumentos extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
-            String id = request.getParameter("id");
+            
+            String userid = request.getParameter("userid");
+            String permiso = request.getParameter("tipo_usuario");
             String nombreDocumento = request.getParameter("nombre_documento");
             String generofilter = request.getParameter("generofilter");
             String sql;
@@ -38,12 +40,7 @@ public class SrvDocumentos extends HttpServlet {
                     }
                     nombreDocumento = "%" + nombreDocumento + "%";
                 } else {
-                    if (id != null && !id.isEmpty()) {
-                        sql = "SELECT * FROM documentos WHERE id = ?";
-                        if(generofilter != null && !generofilter.isEmpty()){
-                            sql += " AND genero = ?";
-                        }
-                    } else if (nombreDocumento != null && !nombreDocumento.isEmpty()) {
+                    if (nombreDocumento != null && !nombreDocumento.isEmpty()) {
                         sql = "SELECT * FROM documentos WHERE nombre_documento LIKE ?";
                         if(generofilter != null && !generofilter.isEmpty()){
                             sql += " AND genero = ?";
@@ -56,6 +53,7 @@ public class SrvDocumentos extends HttpServlet {
                         }
                     }
                 }
+
 
                 try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                     int paramIndex = 1;
@@ -78,11 +76,21 @@ public class SrvDocumentos extends HttpServlet {
                         out.println("<body>");
                         out.println("<div class=\"Pantalla\">");
                         out.println("<div class=\"menu-superior\">");
-                        out.println("<div class=\"menu-1\"></div>");
+                        
+                        //IZQUIERDA
+                        out.println("<div class=\"menu-1\">");
+                        out.println("</div>");
+                        
+                        //EN MEDIO
                         out.println("<div class=\"menu-2\">");
                         
+                        if (permiso.startsWith("Administrador") ){
                         //Botón a agregar
                         out.println("<form method=\"post\" action=\"Form.jsp\">");
+                        
+                        out.println("<input type=\"hidden\" id=\"userid\" name=\"userid\" value=\"" + request.getParameter("userid") + "\">");
+                        out.println("<input type=\"hidden\" id=\"tipo_usuario\" name=\"tipo_usuario\" value=\"" + request.getParameter("tipo_usuario") + "\">");
+                        
                         out.println("<input type=\"hidden\" name=\"id\" value=\"\">");
                         out.println("<input type=\"hidden\" name=\"nombre_documento\" value=\"\">");
                         out.println("<input type=\"hidden\" name=\"resumen\" value=\"\">");
@@ -96,10 +104,31 @@ public class SrvDocumentos extends HttpServlet {
                         out.println("<input type=\"hidden\" name=\"image_url\" value=\"\">");
                         out.println("<input class=\"Buscar-boton\" type=\"submit\" value=\"Agregar +\" name=\"detalles\" style=\"margin-top:12px; margin-left:15px\">");
                         out.println("</form>");
+                        }
+                        out.println("</div>");
+                        
+                        //DERECHA
+                        out.println("<div class=\"menu-3\">");
+                        
+                        if (userid == null){
+                            
+                        out.println("<form method=\"post\" action=\"Login.jsp\">");
+                        out.println("<input class=\"button-2\" type=\"submit\" value=\"Iniciar sesión\" name=\"Login\">");
+                        
+                        }else{
+                            
+                        out.println("<form method=\"post\" action=\"SrvPrestamos\">");
+                        
+                        out.println("<input type=\"hidden\" id=\"userid\" name=\"userid\" value=\"" + request.getParameter("userid") + "\">");
+                        out.println("<input type=\"hidden\" id=\"tipo_usuario\" name=\"tipo_usuario\" value=\"" + request.getParameter("tipo_usuario") + "\">");
+                        
+                        out.println("<input class=\"button-2\" type=\"submit\" value=\"ver préstamos\" name=\"Login\">");
+                        
+                        }
+                        out.println("</div>");
                         
                         out.println("</div>");
-                        out.println("<div class=\"menu-3\"></div>");
-                        out.println("</div>");
+                        
                         out.println("<div class=\"contenido-pagina\">");
                         out.println("<div class=\"degradado\"></div>");
                         out.println("<div class=\"fondo\">");
@@ -125,12 +154,21 @@ public class SrvDocumentos extends HttpServlet {
                             
                             //Botón ver
                             out.println("<form class=\"botones left\" method=\"post\" action=\"SrvInfoLibro\">");
+                            
+                            out.println("<input type=\"hidden\" id=\"userid\" name=\"userid\" value=\"" + userid + "\">");
+                            out.println("<input type=\"hidden\" id=\"tipo_usuario\" name=\"tipo_usuario\" value=\"" + permiso + "\">");
+                            
                             out.println("<input type=\"hidden\" name=\"id\" value=\"" + resultSet.getString("id") + "\">");
                             out.println("<input class=\"Buscar-boton\" type=\"submit\" value=\"Ver más\" name=\"detalles\">");
                             out.println("</form>");
                             
+                            if (permiso.startsWith("Administrador") ){
                             //Botón a editar
                             out.println("<form method=\"post\" action=\"Form.jsp\">");
+                            
+                            out.println("<input type=\"hidden\" id=\"userid\" name=\"userid\" value=\"" + request.getParameter("userid") + "\">");
+                            out.println("<input type=\"hidden\" id=\"tipo_usuario\" name=\"tipo_usuario\" value=\"" + request.getParameter("tipo_usuario") + "\">");
+                            
                             out.println("<input type=\"hidden\" name=\"id\" value=\"" + resultSet.getString("id") + "\">");
                             out.println("<input type=\"hidden\" name=\"nombre_documento\" value=\"" + resultSet.getString("nombre_documento") +"\">");
                             out.println("<input type=\"hidden\" name=\"tipo_documento\" value=\"" + resultSet.getString("tipo_documento") +"\">");
@@ -145,6 +183,7 @@ public class SrvDocumentos extends HttpServlet {
                             out.println("<input type=\"hidden\" name=\"image_url\" value=\"" + resultSet.getString("image_url") + "\">");
                             out.println("<input class=\"Buscar-boton\" type=\"submit\" value=\"Editar\" name=\"detalles\">");
                             out.println("</form>");
+                            } 
                             
                             out.println("</div>"); //botones ends
                             out.println("</div>"); //card
@@ -156,7 +195,13 @@ public class SrvDocumentos extends HttpServlet {
                         out.println("</div>"); // Close contenido
                         out.println("<div class=\"principal\">");
                         // Barra de búsqueda básica
+                        out.println("<img src=\"https://drive.google.com/uc?id=1k_PKQeTJVDgnu8TX7uZkQOec_wN_L9Qv\" alt=\"Image\" class=\"top-image\">");
+                        
                         out.println("<form class=\"Buscar\" method=\"post\" action=\"SrvDocumentos\">");
+                        
+                        out.println("<input type=\"hidden\" id=\"userid\" name=\"userid\" value=\"" + request.getParameter("userid") + "\">");
+                        out.println("<input type=\"hidden\" id=\"tipo_usuario\" name=\"tipo_usuario\" value=\"" + request.getParameter("tipo_usuario") + "\">");
+                        
                         out.println("<label for=\"search\">Buscar:</label>");
                         out.println("<input class=\"Buscar-texto\" type=\"text\" id=\"nombre_documento\" name=\"nombre_documento\">");
                         out.println("<input class=\"Buscar-boton\" type=\"submit\" value=\"Buscar\" name=\"search\">");
@@ -172,6 +217,10 @@ public class SrvDocumentos extends HttpServlet {
                         
                         //boton a busqueda avanzada
                         out.println("<form class=\"BusquedaAv\" method=\"post\" action=\"SrvBusqueda\">");
+                        
+                        out.println("<input type=\"hidden\" id=\"userid\" name=\"userid\" value=\"" + request.getParameter("userid") + "\">");
+                        out.println("<input type=\"hidden\" id=\"tipo_usuario\" name=\"tipo_usuario\" value=\"" + request.getParameter("tipo_usuario") + "\">");
+                        
                         out.println("<input class=\"Buscar-boton\" type=\"submit\" value=\"Búsqueda avanzada\" name=\"detalles\">");
                         out.println("</form>");
                         
@@ -181,6 +230,8 @@ public class SrvDocumentos extends HttpServlet {
                         }else{
                         filtrando = "Filtrando por: " + generofilter;
                         out.println("<h1>" + filtrando + "</h1>");}
+                        
+                        
                         
                         out.println("</div>"); // Close principal
                         out.println("</div>"); // Close fondo
